@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 using MongoRepository.Config;
 using MongoRepository.Core.Attributes;
 using MongoRepository.Core.Entities;
@@ -13,14 +14,21 @@ namespace MongoRepository.Repository
     {
         private readonly IMongoCollection<T> _collection;
 
-        public MongoRepository(IMongoDbSettings settings)
+        public MongoRepository(IOptions<MongoDbSettings> settings)
         {
-            var database = new MongoClient(settings.ConnectionString).GetDatabase(settings.DatabaseName);
-            _collection = database.GetCollection<T>(GetCollectionName(typeof(T)));
+            try
+            {
+                var database = new MongoClient(settings.Value.ConnectionString).GetDatabase(settings.Value.DatabaseName);
+                _collection = database.GetCollection<T>(GetCollectionName(typeof(T)));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Can not access to MongoDb server.", ex);
+            }
+           
         }
 
         //Store Data To Collection
-       
         private protected string GetCollectionName(Type documentType)
         {
             return ((BsonCollectionAttribute)documentType.GetCustomAttributes(
