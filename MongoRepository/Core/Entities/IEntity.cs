@@ -3,10 +3,9 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace MongoRepository.Core.Entities
 {
-    /*
-     * MongoEntity interface
-     * Interface IEntity using for Generete Id
-    */
+    /// <summary>
+    /// Generic Entity interface.
+    /// </summary>
     public interface IEntity
     {
         [BsonId]
