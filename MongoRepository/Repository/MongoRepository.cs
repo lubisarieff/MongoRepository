@@ -25,7 +25,6 @@ namespace MongoRepository.Repository
             {
                 throw new Exception("Can not access to MongoDb server.", ex);
             }
-           
         }
 
         //Store Data To Collection
