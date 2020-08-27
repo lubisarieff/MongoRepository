@@ -30,8 +30,8 @@ namespace MongoRepository.Repository
         //Store Data To Collection
         private protected string GetCollectionName(Type documentType)
         {
-            return ((BsonCollectionAttribute)documentType.GetCustomAttributes(
-                 typeof(BsonCollectionAttribute),
+            return ((CollectionName)documentType.GetCustomAttributes(
+                 typeof(CollectionName),
                  true)
              .FirstOrDefault())?.CollectionName;
         }
