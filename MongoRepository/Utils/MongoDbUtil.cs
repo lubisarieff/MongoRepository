@@ -26,6 +26,16 @@ namespace MongoRepository.Utils
         }
 
         /// <summary>
+        /// Creates and returns a MongoDatabase from the specified url.
+        /// </summary>
+        /// <param name="url">The url to use to get the database from.</param>
+        /// <returns>Returns a MongoDatabase from the specified url.</returns>
+        private static MongoDatabaseBase GetDatabaseFromUrl(MongoUrl url)
+        {
+            return (MongoDatabaseBase)new MongoClient(url).GetDatabase(url.DatabaseName);
+        }
+
+        /// <summary>
         /// Creates and return a MongoCollection from the specified type and connectionstring
         /// </summary>
         /// <typeparam name="T">The type to get the collection</typeparam>
@@ -51,7 +61,31 @@ namespace MongoRepository.Utils
                 .GetCollection<T>(collectionName);
         }
 
+        /// <summary>
+        /// Creates and returns a MongoCollection from the specified type and url.
+        /// </summary>
+        /// <typeparam name="T">The type to get the collection of.</typeparam>
+        /// <param name="url">The url to use to get the collection from.</param>
+        /// <returns>Returns a MongoCollection from the specified type and url.</returns>
+        public static IMongoCollection<T> GetCollectionFromUrl<T>(MongoUrl url)
+            where T : IEntity<U>
+        {
+            return MongoDbUtil<U>.GetCollectionFromUrl<T>(url, GetCollectionName<T>());
+        }
 
+        /// <summary>
+        /// Creates and returns a MongoCollection from the specified type and url.
+        /// </summary>
+        /// <typeparam name="T">The type to get the collection of.</typeparam>
+        /// <param name="url">The url to use to get the collection from.</param>
+        /// <param name="collectionName">The name of the collection to use.</param>
+        /// <returns>Returns a MongoCollection from the specified type and url.</returns>
+        public static IMongoCollection<T> GetCollectionFromUrl<T>(MongoUrl url, string collectionName)
+            where T : IEntity<U>
+        {
+            return MongoDbUtil<U>.GetDatabaseFromUrl(url)
+                .GetCollection<T>(collectionName);
+        }
 
         /// <summary>
         /// Determines the CollectionName for T and assures it is not empty
@@ -97,7 +131,6 @@ namespace MongoRepository.Utils
             {
                 collectionName = typeof(T).Name;
             }
-
             return collectionName;
         }
 
@@ -129,7 +162,6 @@ namespace MongoRepository.Utils
                 }
                 collectionName = entityType.Name;
             }
-
             return collectionName;
         }
     }
