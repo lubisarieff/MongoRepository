@@ -16,7 +16,7 @@ namespace MongoRepository.Repository
         where T : IEntity<TKey>
     {
         protected internal readonly IMongoCollection<T> _collection;
-      
+
         /// <summary>
         /// Intialize a new instance of the MongoRepository class.
         /// </summary>
@@ -35,7 +35,7 @@ namespace MongoRepository.Repository
         {
             _collection = MongoDbUtil<TKey>.GetCollectionFromUrl<T>(url);
         }
-
+       
         /// <summary>
         /// Initializes a new instance of the MongoRepository class.
         /// </summary>
@@ -55,7 +55,7 @@ namespace MongoRepository.Repository
         {
            _collection = MongoDbUtil<TKey>.GetCollectionFromUrl<T>(url, collectionName);
         }
-
+        
         /// <summary>
         /// Gets the Mongo collection (to perform advanced operations).
         /// </summary>
@@ -129,16 +129,7 @@ namespace MongoRepository.Repository
     /// <remarks>Entities are assumed to use strings for Id's.</remarks>
     public class MongoRepository<T> : MongoRepository<T, string>, IMongoRepository<T>
         where T : IEntity<string>
-    {
-        /// <summary>
-        /// Initializes a new instance of the MongoRepository class.
-        /// Uses the Default App/Web.Config connectionstrings to fetch the connectionString and Database name.
-        /// </summary>
-        /// <remarks>Default constructor defaults to "MongoServerSettings" key for connectionstring.</remarks>
-        //public MongoRepository()
-        //  : base() { }
-
-
+    {       
         /// <summary>
         /// Initializes a new instance of the MongoRepository class.
         /// </summary>
@@ -160,7 +151,7 @@ namespace MongoRepository.Repository
         /// </summary>
         /// <param name="url">Url to use for connecting to MongoDB.</param>
         public MongoRepository(MongoUrl url)
-          : base(url) { }
+         : base(url) { }
 
         /// <summary>
         /// Initializes a new instance of the MongoRepository class.
