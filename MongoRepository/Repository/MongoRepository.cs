@@ -26,7 +26,14 @@ namespace MongoRepository.Repository
             _collection = MongoDbUtil<TKey>.GetCollectionFromConnectionString<T>(options);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string Nama()
+        {
+            return null;
+        }
         /// <summary>
         /// Initializes a new instance of the MongoRepository class.
         /// </summary>
