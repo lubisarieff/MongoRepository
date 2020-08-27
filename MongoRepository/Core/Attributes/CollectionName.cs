@@ -17,8 +17,8 @@ namespace MongoRepository.Core.Attributes
         {
            
             if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("Empty collection name is not allowed ", nameof(collectionName));
-            this.Name = value;
+                throw new ArgumentException("Empty collection name is not allowed ", nameof(value));
+            this.Name = value;  
         }
 
         // <summary>

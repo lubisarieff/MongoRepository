@@ -1,10 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using MongoRepository.Config;
 using MongoRepository.Core.Attributes;
 using MongoRepository.Core.Entities;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MongoRepository.Utils
 {
@@ -17,12 +16,12 @@ namespace MongoRepository.Utils
         /// <summary>
         /// Creates and returns a MongoDatabase from specified mongodbsettings
         /// </summary>
-        /// <param name="connectionString">The connectionstring to use to get connection from.</param>
-        /// <param name="databaseName">The databasename to use to get database from.</param>
+        /// <param name="options">The options to use get connectionstring and get database from.</param>
         /// <returns>Returns a MongoDatabase from the specified mongodbsettings</returns>
-        private static MongoDatabaseBase GetDatabaseFromMongoDbSettings(string connectionString, string databaseName)
+        /// <summary>
+        private static MongoDatabaseBase GetDatabaseFromMongoDbSettings(IOptions<MongoDbSettings> options)
         {
-            return (MongoDatabaseBase)new MongoClient(connectionString).GetDatabase(databaseName);
+            return (MongoDatabaseBase)new MongoClient(options.Value.ConnectionString).GetDatabase(options.Value.DatabaseName);
         }
 
         /// <summary>
@@ -41,23 +40,23 @@ namespace MongoRepository.Utils
         /// <typeparam name="T">The type to get the collection</typeparam>
         /// <param name="connectionString">The connectionstring to use to get the collection from.</param>
         /// <returns>Returns a MongoCollection from the specified type and connectionstring.</returns>
-        public static IMongoCollection<T> GetCollectionFromConnectionString<T>(string connectionString)
+        public static IMongoCollection<T> GetCollectionFromConnectionString<T>(IOptions<MongoDbSettings> options)
             where T : IEntity<U>
         {
-            return MongoDbUtil<U>.GetCollectionFromConnectionString<T>(connectionString, GetCollectionName<T>());
+            return GetCollectionFromConnectionString<T>(options, GetCollectionName<T>());
         }
 
         /// <summary>
         /// Creates and returns a MongoCollection from specified type and connectionString
         /// </summary>
         /// <typeparam name="T">The type to get the collection of.</typeparam>
-        /// <param name="connectionString">The connectionstring to use to get the collection from.</param>
+        /// <param name="options">The options to use get connectionstring and get database from.</param>
         /// <param name="collectionName">The name of the collection use.</param>
         /// <returns>Returns a MongoCollection form the specified type and connectionstring</returns>
-        public static IMongoCollection<T> GetCollectionFromConnectionString<T>(string connectionString, string collectionName)
+        public static IMongoCollection<T> GetCollectionFromConnectionString<T>(IOptions<MongoDbSettings> options, string collectionName)
             where T : IEntity<U>
         {
-            return MongoDbUtil<U>.GetDatabaseFromMongoDbSettings(connectionString, collectionName)
+            return GetDatabaseFromMongoDbSettings(options)
                 .GetCollection<T>(collectionName);
         }
 
@@ -70,7 +69,7 @@ namespace MongoRepository.Utils
         public static IMongoCollection<T> GetCollectionFromUrl<T>(MongoUrl url)
             where T : IEntity<U>
         {
-            return MongoDbUtil<U>.GetCollectionFromUrl<T>(url, GetCollectionName<T>());
+            return GetCollectionFromUrl<T>(url, GetCollectionName<T>());
         }
 
         /// <summary>
@@ -83,7 +82,7 @@ namespace MongoRepository.Utils
         public static IMongoCollection<T> GetCollectionFromUrl<T>(MongoUrl url, string collectionName)
             where T : IEntity<U>
         {
-            return MongoDbUtil<U>.GetDatabaseFromUrl(url)
+            return GetDatabaseFromUrl(url)
                 .GetCollection<T>(collectionName);
         }
 
