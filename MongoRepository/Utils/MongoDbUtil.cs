@@ -21,9 +21,9 @@ namespace MongoRepository.Utils
         /// <param name="options">The options to use get connectionstring and get database from.</param>
         /// <returns>Returns a MongoDatabase from the specified mongodbsettings</returns>
         /// <summary>
-        private static MongoDatabaseBase GetDatabaseFromMongoDbSettings(IOptions<MongoDbSettings> options)
+        private static MongoDatabaseBase GetDatabaseFromMongoDbSettings(IMongoDbSettings options)
         {
-            return (MongoDatabaseBase)new MongoClient(options.Value.ConnectionString).GetDatabase(options.Value.DatabaseName);
+            return (MongoDatabaseBase)new MongoClient(options.ConnectionString).GetDatabase(options.DatabaseName);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace MongoRepository.Utils
         /// <typeparam name="T">The type to get the collection</typeparam>
         /// <param name="connectionString">The connectionstring to use to get the collection from.</param>
         /// <returns>Returns a MongoCollection from the specified type and connectionstring.</returns>
-        public static IMongoCollection<T> GetCollectionFromConnectionString<T>(IOptions<MongoDbSettings> options)
+        public static IMongoCollection<T> GetCollectionFromConnectionString<T>(IMongoDbSettings options)
             where T : IEntity<U>
         {
             return GetCollectionFromConnectionString<T>(options, GetCollectionName<T>());
@@ -55,7 +55,7 @@ namespace MongoRepository.Utils
         /// <param name="options">The options to use get connectionstring and get database from.</param>
         /// <param name="collectionName">The name of the collection use.</param>
         /// <returns>Returns a MongoCollection form the specified type and connectionstring</returns>
-        public static IMongoCollection<T> GetCollectionFromConnectionString<T>(IOptions<MongoDbSettings> options, string collectionName)
+        public static IMongoCollection<T> GetCollectionFromConnectionString<T>(IMongoDbSettings options, string collectionName)
             where T : IEntity<U>
         {
             return GetDatabaseFromMongoDbSettings(options)

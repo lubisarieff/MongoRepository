@@ -21,7 +21,7 @@ namespace MongoRepository.Repository
         /// Intialize a new instance of the MongoRepository class.
         /// </summary>
         /// <param name="options">options.Value.Conectionstring to use for connection to MongoDB</param>
-        public MongoRepository(IOptions<MongoDbSettings> options)
+        public MongoRepository(IMongoDbSettings options)
         {
             _collection = MongoDbUtil<TKey>.GetCollectionFromConnectionString<T>(options);
         }
@@ -41,7 +41,7 @@ namespace MongoRepository.Repository
         /// </summary>
         // <param name="options">options.Value.Conectionstring to use for connection to MongoDB</param>
         /// <param name="collectionName">The name of the collection to use.</param>
-        public MongoRepository(IOptions<MongoDbSettings> options, string collectionName)
+        public MongoRepository(IMongoDbSettings options, string collectionName)
         {
             _collection = MongoDbUtil<TKey>.GetCollectionFromConnectionString<T>(options, collectionName);
         }
@@ -135,14 +135,14 @@ namespace MongoRepository.Repository
         /// </summary>
         /// <param name="url">Url to use for connecting to MongoDB.</param>
         /// <param name="collectionName">The name of the collection to use.</param>
-        public MongoRepository(IOptions<MongoDbSettings> options, string collectionName)
+        public MongoRepository(IMongoDbSettings options, string collectionName)
             : base(options, collectionName) { }
 
         /// <summary>
         /// Initializes a new instance of the MongoRepository class.
         /// </summary>
         /// <param name="connectionString">Connectionstring to use for connecting to MongoDB.</param>
-        public MongoRepository(IOptions<MongoDbSettings> options)
+        public MongoRepository(IMongoDbSettings options)
             : base(options) { }
 
 
