@@ -12,7 +12,7 @@ namespace MongoRepository.Core.Attributes
         /// <summary>
         /// Initializes a new instance of the CollectionName class attribute with the desired name.
         /// </summary>
-        /// <param name="collectionName">Name of the collection.</param>
+        /// <param name="value">Name of the collection.</param>
         public CollectionName(string value)
         {
            

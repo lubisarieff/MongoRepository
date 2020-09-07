@@ -1,11 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using MongoRepository.Config;
 using MongoRepository.Core.Attributes;
 using MongoRepository.Core.Entities;
 using System;
-using System.IO;
 
 namespace MongoRepository.Utils
 {

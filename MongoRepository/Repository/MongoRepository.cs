@@ -1,14 +1,9 @@
-﻿using Microsoft.Extensions.Options;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using MongoRepository.Config;
-using MongoRepository.Core.Attributes;
 using MongoRepository.Core.Entities;
 using MongoRepository.Utils;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace MongoRepository.Repository
 {
@@ -26,14 +21,6 @@ namespace MongoRepository.Repository
             _collection = MongoDbUtil<TKey>.GetCollectionFromConnectionString<T>(options);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public string Nama()
-        {
-            return null;
-        }
         /// <summary>
         /// Initializes a new instance of the MongoRepository class.
         /// </summary>
